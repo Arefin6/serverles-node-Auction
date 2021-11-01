@@ -39,7 +39,14 @@ functions:
     events:
       - http:
           method: GET
-          path: /auctions    
+          path: /auctions
+
+  getAuction:
+    handler: src/handlers/getAuction.handler
+    events:
+      - http:
+          method: GET
+          path: /auction/{id}           
 
 custom:
   bundle:

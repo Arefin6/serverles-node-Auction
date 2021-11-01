@@ -5,16 +5,18 @@ import createError from 'http-errors';
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
-async function getAuctions(event, context) {
+async function getAuction(event, context) {
   
   let auctions;
+  const {id} = event.pathParameters; 
 
     try{
-        const result = await dynamoDb.scan({
+        const result = await dynamoDb.get({
             TableName:'AuctionsTable',
+            Key:{id}
         }).promise();
 
-      auctions =result.Items;
+      auctions =result.Item;
 
       }catch(err){
 
@@ -29,6 +31,4 @@ async function getAuctions(event, context) {
   };
 }
 
-export const handler = commonMiddleware(getAuctions)
-
-
+export const handler = commonMiddleware(getAuction)
